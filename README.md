@@ -1,4 +1,5 @@
 # Bass Finger Independence — Practice Guide
+![bass finger independence screenshot](independence.jpg)
 
 ## The Basic Idea
 
