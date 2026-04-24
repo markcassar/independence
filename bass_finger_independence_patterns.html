@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bass Finger Patterns · E–A–D–G</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #08090b;
+  --surf:     #0e1014;
+  --border:   #1e2228;
+  --border-h: #2e3848;
+  --acc:      #c8932a;
+  --acc-dim:  rgba(200,147,42,0.10);
+  --e:        #5a9fd4;
+  --a:        #d47850;
+  --d:        #6dbf8a;
+  --g:        #b87fcc;
+  --e-dim:    rgba(90,159,212,0.13);
+  --a-dim:    rgba(212,120,80,0.13);
+  --d-dim:    rgba(109,191,138,0.13);
+  --g-dim:    rgba(184,127,204,0.13);
+  --text:     #bbc6d2;
+  --sub:      #5a6a7a;
+  --dim:      #2a3540;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  padding: 24px 20px 48px;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header { margin-bottom: 24px; }
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.14em;
+  color: var(--acc);
+  line-height: 1;
+}
+.subtitle {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--sub);
+  margin-top: 5px;
+}
+
+/* ── TOP-LEVEL NAV ── */
+.top-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+.top-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--sub);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  padding: 10px 24px 9px;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 0.12s, border-color 0.12s;
+}
+.top-btn:hover { color: var(--text); }
+.top-btn.active { color: var(--acc); border-bottom-color: var(--acc); }
+
+/* ── TOP SECTIONS ── */
+.top-section { display: none; padding-top: 20px; }
+.top-section.active { display: block; }
+
+/* ── LEGEND ── */
+.legend {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  flex-wrap: wrap;
+}
+.leg-item { display: flex; align-items: center; gap: 7px; }
+.leg-dot  { width: 9px; height: 9px; border-radius: 1px; flex-shrink: 0; }
+.leg-e    { background: var(--e-dim); border: 1px solid var(--e); }
+.leg-a    { background: var(--a-dim); border: 1px solid var(--a); }
+.leg-d    { background: var(--d-dim); border: 1px solid var(--d); }
+.leg-note { font-size: 0.58rem; color: var(--sub); }
+/* ── SUB CONTROLS ── */
+.sub-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ctrl-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--sub);
+  margin-right: 4px;
+}
+.tab-btn {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  color: var(--sub);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+.tab-btn:hover { border-color: var(--border-h); color: var(--text); }
+.tab-btn.active {
+  background: var(--acc-dim);
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+/* ── SUB SECTIONS ── */
+.sub-section { display: none; }
+.sub-section.active { display: block; }
+
+/* ── INFO BAR ── */
+.info-bar {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--sub);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* ── GROUP BLOCKS ── */
+.group-block { margin-bottom: 24px; }
+.group-hdr {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--sub);
+  border-left: 2px solid var(--border-h);
+  padding-left: 8px;
+  margin-bottom: 10px;
+}
+.group-hdr span { color: var(--text); }
+
+/* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  padding: 9px 10px 10px;
+  transition: border-color 0.12s;
+}
+.card:hover { border-color: var(--border-h); }
+.card-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 9px;
+}
+.card-num { font-size: 0.58rem; color: var(--sub); letter-spacing: 0.1em; }
+.card-seq { font-size: 0.6rem;  color: var(--sub); letter-spacing: 0.08em; }
+
+/* ── TAB DISPLAY ── */
+.tab-wrap { display: flex; flex-direction: column; }
+.tab-row {
+  display: flex;
+  align-items: stretch;
+  height: 24px;
+}
+.str-id {
+  width: 14px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.str-id.e { color: var(--e); }
+.str-id.a { color: var(--a); }
+.str-id.d { color: var(--d); }
+.str-id.g { color: var(--g); }
+
+.tab-inner {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  border-bottom: 1px solid;
+}
+.tab-inner.e { border-color: rgba(90,159,212,0.25); }
+.tab-inner.a { border-color: rgba(212,120,80,0.25); }
+.tab-inner.d { border-color: rgba(109,191,138,0.25); }
+.tab-inner.g { border-color: rgba(184,127,204,0.25); }
+
+.ncell {
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ncell.ne { background: var(--e-dim); color: var(--e); }
+.ncell.na { background: var(--a-dim); color: var(--a); }
+.ncell.nd { background: var(--d-dim); color: var(--d); }
+.ncell.ng { background: var(--g-dim); color: var(--g); }
+.ncell.em { color: var(--dim); font-weight: 400; font-size: 0.6rem; }
+
+.order-row {
+  display: flex;
+  margin-left: 14px;
+  margin-top: 3px;
+}
+.ocell {
+  width: 26px;
+  text-align: center;
+  font-size: 0.52rem;
+  color: var(--dim);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bass Finger Patterns &nbsp;·&nbsp; E ─ A ─ D ─ G</h1>
+  <div class="subtitle">FINGER INDEPENDENCE &nbsp;/&nbsp; ALL PERMUTATIONS · 1, 2, 3 &amp; 4 STRINGS</div>
+</header>
+
+<div class="top-nav">
+  <button class="top-btn active" data-top="t1str">1 STRING</button>
+  <button class="top-btn"        data-top="t2str">2 STRINGS &nbsp;(E–A)</button>
+  <button class="top-btn"        data-top="t3str">3 STRINGS &nbsp;(E–A–D)</button>
+  <button class="top-btn"        data-top="t4str">4 STRINGS &nbsp;(E–A–D–G)</button>
+</div>
+
+<!-- ═══════════ 1-STRING ═══════════ -->
+<div id="t1str" class="top-section active">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot leg-e"></div><span style="color:var(--e)">E STRING</span></div>
+    <span class="leg-note">FRET = FINGER + 4 &nbsp;│&nbsp; 1→5 &nbsp;2→6 &nbsp;3→7 &nbsp;4→8</span>
+  </div>
+  <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; ALL 4-FINGER PERMUTATIONS ON ONE STRING &nbsp;·&nbsp; GROUPED BY LEADING FINGER</div>
+  <div id="body1str"></div>
+</div>
+
+<!-- ═══════════ 2-STRING ═══════════ -->
+<div id="t2str" class="top-section">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot leg-e"></div><span style="color:var(--e)">E STRING</span></div>
+    <div class="leg-item"><div class="leg-dot leg-a"></div><span style="color:var(--a)">A STRING</span></div>
+    <span class="leg-note">FRET = FINGER + 4 &nbsp;│&nbsp; E PLAYED BEFORE A</span>
+  </div>
+  <div class="sub-controls">
+    <span class="ctrl-label">SPLIT</span>
+    <button class="tab-btn active" data-sec="s22">2 + 2</button>
+    <button class="tab-btn"        data-sec="s31">3 + 1</button>
+    <button class="tab-btn"        data-sec="s13">1 + 3</button>
+  </div>
+  <div id="s22" class="sub-section active">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 2 NOTES PER STRING &nbsp;·&nbsp; GROUPED BY E-STRING PAIR</div>
+    <div id="body22"></div>
+  </div>
+  <div id="s31" class="sub-section">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 3 NOTES ON E · 1 ON A &nbsp;·&nbsp; GROUPED BY A-STRING FINGER</div>
+    <div id="body31"></div>
+  </div>
+  <div id="s13" class="sub-section">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 1 NOTE ON E · 3 ON A &nbsp;·&nbsp; GROUPED BY E-STRING FINGER</div>
+    <div id="body13"></div>
+  </div>
+</div>
+
+<!-- ═══════════ 3-STRING ═══════════ -->
+<div id="t3str" class="top-section">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot leg-e"></div><span style="color:var(--e)">E STRING</span></div>
+    <div class="leg-item"><div class="leg-dot leg-a"></div><span style="color:var(--a)">A STRING</span></div>
+    <div class="leg-item"><div class="leg-dot leg-d"></div><span style="color:var(--d)">D STRING</span></div>
+    <span class="leg-note">FRET = FINGER + 4 &nbsp;│&nbsp; E → A → D ORDER</span>
+  </div>
+  <div class="sub-controls">
+    <span class="ctrl-label">SPLIT</span>
+    <button class="tab-btn active" data-sec="s211">2 + 1 + 1</button>
+    <button class="tab-btn"        data-sec="s121">1 + 2 + 1</button>
+    <button class="tab-btn"        data-sec="s112">1 + 1 + 2</button>
+  </div>
+  <div id="s211" class="sub-section active">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 2 ON E · 1 ON A · 1 ON D &nbsp;·&nbsp; GROUPED BY E-STRING PAIR</div>
+    <div id="body211"></div>
+  </div>
+  <div id="s121" class="sub-section">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 1 ON E · 2 ON A · 1 ON D &nbsp;·&nbsp; GROUPED BY A-STRING PAIR</div>
+    <div id="body121"></div>
+  </div>
+  <div id="s112" class="sub-section">
+    <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 1 ON E · 1 ON A · 2 ON D &nbsp;·&nbsp; GROUPED BY D-STRING PAIR</div>
+    <div id="body112"></div>
+  </div>
+</div>
+
+<!-- ═══════════ 4-STRING ═══════════ -->
+<div id="t4str" class="top-section">
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot leg-e"></div><span style="color:var(--e)">E STRING</span></div>
+    <div class="leg-item"><div class="leg-dot leg-a"></div><span style="color:var(--a)">A STRING</span></div>
+    <div class="leg-item"><div class="leg-dot leg-d"></div><span style="color:var(--d)">D STRING</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--g-dim);border:1px solid var(--g)"></div><span style="color:var(--g)">G STRING</span></div>
+    <span class="leg-note">FRET = FINGER + 4 &nbsp;│&nbsp; E → A → D → G ORDER &nbsp;│&nbsp; 1 NOTE PER STRING</span>
+  </div>
+  <div class="info-bar">24 PATTERNS &nbsp;·&nbsp; 1 FINGER PER STRING · E→A→D→G &nbsp;·&nbsp; GROUPED BY E–A PAIR</div>
+  <div id="body4str"></div>
+</div>
+
+<script>
+/* ─── UTILS ─── */
+const FF = { 1:5, 2:6, 3:7, 4:8 };
+
+function permute(arr) {
+  if (arr.length <= 1) return [arr.slice()];
+  const out = [];
+  for (let i = 0; i < arr.length; i++) {
+    const rest = arr.filter((_,j) => j !== i);
+    permute(rest).forEach(p => out.push([arr[i], ...p]));
+  }
+  return out;
+}
+const PERMS4 = permute([1,2,3,4]);
+
+/* ─── 1-STRING CARD ─── */
+function card1(seq, id) {
+  const cells = seq.map(f => `<div class="ncell ne">${FF[f]}</div>`).join('');
+  const ocells = [1,2,3,4].map(i => `<div class="ocell">${i}</div>`).join('');
+  return `<div class="card">
+    <div class="card-hdr">
+      <span class="card-num">#${String(id).padStart(2,'0')}</span>
+      <span class="card-seq">${seq.join('·')}</span>
+    </div>
+    <div class="tab-wrap">
+      <div class="tab-row">
+        <div class="str-id e">E</div>
+        <div class="tab-inner e">${cells}</div>
+      </div>
+      <div class="order-row">${ocells}</div>
+    </div>
+  </div>`;
+}
+
+/* ─── 2-STRING CARD ─── */
+function card2(p, id) {
+  const N = 4, ec = p.e.length;
+  const eSlots = Array(N).fill(null);
+  const aSlots = Array(N).fill(null);
+  p.e.forEach((f,i) => { eSlots[i]      = FF[f]; });
+  p.a.forEach((f,i) => { aSlots[ec + i] = FF[f]; });
+
+  function row2(lbl, slots, cls) {
+    return `<div class="tab-row">
+      <div class="str-id ${cls}">${lbl}</div>
+      <div class="tab-inner ${cls}">${slots.map(v =>
+        v !== null ? `<div class="ncell n${cls}">${v}</div>` : `<div class="ncell em">─</div>`
+      ).join('')}</div>
+    </div>`;
+  }
+  const ocells = Array.from({length:N},(_,i) => `<div class="ocell">${i+1}</div>`).join('');
+  return `<div class="card">
+    <div class="card-hdr">
+      <span class="card-num">#${String(id).padStart(2,'0')}</span>
+      <span class="card-seq">${p.seq.join('·')}</span>
+    </div>
+    <div class="tab-wrap">
+      ${row2('A', aSlots, 'a')}
+      ${row2('E', eSlots, 'e')}
+      <div class="order-row">${ocells}</div>
+    </div>
+  </div>`;
+}
+
+/* ─── 3-STRING CARD ─── */
+function card3(p, id) {
+  const N = 4, ec = p.e.length, ac = p.a.length;
+  const eSlots = Array(N).fill(null);
+  const aSlots = Array(N).fill(null);
+  const dSlots = Array(N).fill(null);
+  p.e.forEach((f,i) => { eSlots[i]          = FF[f]; });
+  p.a.forEach((f,i) => { aSlots[ec + i]      = FF[f]; });
+  p.d.forEach((f,i) => { dSlots[ec + ac + i] = FF[f]; });
+
+  function row3(lbl, slots, cls) {
+    return `<div class="tab-row">
+      <div class="str-id ${cls}">${lbl}</div>
+      <div class="tab-inner ${cls}">${slots.map(v =>
+        v !== null ? `<div class="ncell n${cls}">${v}</div>` : `<div class="ncell em">─</div>`
+      ).join('')}</div>
+    </div>`;
+  }
+  const ocells = Array.from({length:N},(_,i) => `<div class="ocell">${i+1}</div>`).join('');
+  return `<div class="card">
+    <div class="card-hdr">
+      <span class="card-num">#${String(id).padStart(2,'0')}</span>
+      <span class="card-seq">${p.seq.join('·')}</span>
+    </div>
+    <div class="tab-wrap">
+      ${row3('D', dSlots, 'd')}
+      ${row3('A', aSlots, 'a')}
+      ${row3('E', eSlots, 'e')}
+      <div class="order-row">${ocells}</div>
+    </div>
+  </div>`;
+}
+
+/* ─── BUILDERS ─── */
+
+function build1str() {
+  const groupMap = new Map();
+  PERMS4.forEach(seq => {
+    const k = seq[0];
+    if (!groupMap.has(k)) groupMap.set(k, []);
+    groupMap.get(k).push(seq);
+  });
+  let id = 0, html = '';
+  for (const [finger, seqs] of groupMap) {
+    html += `<div class="group-block">
+      <div class="group-hdr">LEADING FINGER: <span>${finger}</span></div>
+      <div class="grid">`;
+    seqs.forEach(seq => { id++; html += card1(seq, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById('body1str').innerHTML = html;
+}
+
+function makePatterns2(eCount) {
+  return PERMS4.map(p => ({ seq: p, e: p.slice(0, eCount), a: p.slice(eCount) }));
+}
+
+function build22() {
+  const patterns = makePatterns2(2);
+  const groupMap = new Map();
+  patterns.forEach(p => {
+    const k = p.e.join('-');
+    if (!groupMap.has(k)) groupMap.set(k, { label: p.e.join(' ─ '), patterns: [] });
+    groupMap.get(k).patterns.push(p);
+  });
+  let id = 0, html = '';
+  for (const [, grp] of groupMap) {
+    html += `<div class="group-block">
+      <div class="group-hdr">E STRING: <span>${grp.label}</span></div>
+      <div class="grid">`;
+    grp.patterns.forEach(p => { id++; html += card2(p, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById('body22').innerHTML = html;
+}
+
+function build31() {
+  const patterns = makePatterns2(3);
+  const groupMap = new Map();
+  patterns.forEach(p => {
+    const k = p.a[0];
+    if (!groupMap.has(k)) groupMap.set(k, { label: String(k), patterns: [] });
+    groupMap.get(k).patterns.push(p);
+  });
+  const sorted = [...groupMap.entries()].sort((a,b) => a[0]-b[0]);
+  let id = 0, html = '';
+  for (const [, grp] of sorted) {
+    html += `<div class="group-block">
+      <div class="group-hdr">A STRING: <span>finger ${grp.label}</span></div>
+      <div class="grid">`;
+    grp.patterns.forEach(p => { id++; html += card2(p, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById('body31').innerHTML = html;
+}
+
+function build13() {
+  const patterns = makePatterns2(1);
+  const groupMap = new Map();
+  patterns.forEach(p => {
+    const k = p.e[0];
+    if (!groupMap.has(k)) groupMap.set(k, { label: String(k), patterns: [] });
+    groupMap.get(k).patterns.push(p);
+  });
+  const sorted = [...groupMap.entries()].sort((a,b) => a[0]-b[0]);
+  let id = 0, html = '';
+  for (const [, grp] of sorted) {
+    html += `<div class="group-block">
+      <div class="group-hdr">E STRING: <span>finger ${grp.label}</span></div>
+      <div class="grid">`;
+    grp.patterns.forEach(p => { id++; html += card2(p, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById('body13').innerHTML = html;
+}
+
+function makePatterns3(eCount, aCount) {
+  return PERMS4.map(p => ({
+    seq: p,
+    e: p.slice(0, eCount),
+    a: p.slice(eCount, eCount + aCount),
+    d: p.slice(eCount + aCount)
+  }));
+}
+
+function build3(eCount, aCount, targetId, groupBy) {
+  const patterns = makePatterns3(eCount, aCount);
+  const groupMap = new Map();
+  patterns.forEach(p => {
+    const grpArr = groupBy === 'e' ? p.e : groupBy === 'a' ? p.a : p.d;
+    const k = grpArr.join('-');
+    if (!groupMap.has(k)) groupMap.set(k, { label: grpArr.join(' ─ '), patterns: [] });
+    groupMap.get(k).patterns.push(p);
+  });
+  const strName = groupBy === 'e' ? 'E STRING' : groupBy === 'a' ? 'A STRING' : 'D STRING';
+  let id = 0, html = '';
+  for (const [, grp] of groupMap) {
+    html += `<div class="group-block">
+      <div class="group-hdr">${strName}: <span>${grp.label}</span></div>
+      <div class="grid">`;
+    grp.patterns.forEach(p => { id++; html += card3(p, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById(targetId).innerHTML = html;
+}
+
+/* ─── INIT ─── */
+build1str();
+build22(); build31(); build13();
+build3(2, 1, 'body211', 'e');
+build3(1, 2, 'body121', 'a');
+build3(1, 1, 'body112', 'd');
+
+/* ─── 4-STRING CARD ─── */
+function card4(seq, id) {
+  // seq[0]=finger on E (beat 1), seq[1]=finger on A (beat 2),
+  // seq[2]=finger on D (beat 3), seq[3]=finger on G (beat 4)
+  // fret = finger + 4; note sits in its string's beat column
+  const stringDefs = [
+    { lbl:'G', cls:'g', beatIdx: 3 },
+    { lbl:'D', cls:'d', beatIdx: 2 },
+    { lbl:'A', cls:'a', beatIdx: 1 },
+    { lbl:'E', cls:'e', beatIdx: 0 },
+  ];
+  const N = 4;
+  const rows = stringDefs.map(s => {
+    const fret  = FF[seq[s.beatIdx]];
+    const cells = Array.from({length: N}, (_, col) =>
+      col === s.beatIdx
+        ? `<div class="ncell n${s.cls}">${fret}</div>`
+        : `<div class="ncell em">─</div>`
+    ).join('');
+    return `<div class="tab-row">
+      <div class="str-id ${s.cls}">${s.lbl}</div>
+      <div class="tab-inner ${s.cls}">${cells}</div>
+    </div>`;
+  }).join('');
+
+  const ocells = Array.from({length:N}, (_, i) =>
+    `<div class="ocell">${i+1}</div>`).join('');
+
+  return `<div class="card">
+    <div class="card-hdr">
+      <span class="card-num">#${String(id).padStart(2,'0')}</span>
+      <span class="card-seq">${seq.join('·')}</span>
+    </div>
+    <div class="tab-wrap">
+      ${rows}
+      <div class="order-row">${ocells}</div>
+    </div>
+  </div>`;
+}
+
+function build4str() {
+  // Group by E·A pair (seq[0]·seq[1]) — 12 groups of 2
+  const groupMap = new Map();
+  PERMS4.forEach(seq => {
+    const k = `${seq[0]}-${seq[1]}`;
+    if (!groupMap.has(k)) groupMap.set(k, { label: `${seq[0]} ─ ${seq[1]}`, patterns: [] });
+    groupMap.get(k).patterns.push(seq);
+  });
+  let id = 0, html = '';
+  for (const [, grp] of groupMap) {
+    html += `<div class="group-block">
+      <div class="group-hdr">E ─ A: <span>${grp.label}</span></div>
+      <div class="grid">`;
+    grp.patterns.forEach(seq => { id++; html += card4(seq, id); });
+    html += `</div></div>`;
+  }
+  document.getElementById('body4str').innerHTML = html;
+}
+
+build4str();
+document.querySelectorAll('.top-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.top-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.top-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.top).classList.add('active');
+  });
+});
+
+/* ─── SUB-TAB NAVS (scoped per section) ─── */
+['t2str', 't3str'].forEach(sectionId => {
+  const section = document.getElementById(sectionId);
+  section.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      section.querySelectorAll('.sub-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.sec).classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>
